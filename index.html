@@ -1,0 +1,68 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Red+Rose&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+</head>
+<body>
+    
+<div class="container">
+    <div class="inner-width">
+        <div id="myId">
+        <label for="">Username </label>
+        <input type="text" id="inputlar" class="username">   
+        <p id="check"></p> 
+        </div>
+
+        <div class="password" id="myId">
+        <label for="">Password </label>
+        <input type="password" id="inputlar">
+        </div>
+        
+        <a href="#"><i class="fas fa-sign-in-alt"></i></a>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function(){
+
+        $(".username").keyup(function(){
+            const username = $(".username").val(); 
+
+            $.post("usercheck.php", 
+            {
+                username : username
+            },
+            function(data, status){
+                //$("#check").text(data); bu calisti
+                
+
+                if(data == "<h2>This username is already taken.</h2>"){
+                    //$("#submit").attr("disabled","false")
+                    document.querySelector("#submit").disabled = true;
+                }
+                else if(data == "<h2>You can take this username</h2>"){
+                    //$("#submit").attr("disabled","false")
+                    document.querySelector("#submit").disabled = false;
+                }
+                $("#check").html(data)
+            });
+            
+            if($(".username") == ""){
+                $("#check").hide();
+            }
+        
+        })
+
+
+
+
+    })
+</script>
+</body>
+</html>
